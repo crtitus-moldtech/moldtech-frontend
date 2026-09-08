@@ -1,0 +1,86 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
+:root {
+  --color-primary: #1e3a8a; /* Dark navy */
+  --color-teal: #2F657D;
+  --color-orange: #f97316; /* Bright orange */
+  --color-text: #1d2b36;
+  --color-text-muted: #64748b;
+  --color-bg-light: #f8fafc;
+  --color-bg-offwhite: #fafafa;
+  --color-white: #ffffff;
+  --color-border: #e2e8f0;
+  
+  --font-family: 'Inter', sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--font-family);
+  color: var(--color-text);
+  line-height: 1.5;
+  background-color: var(--color-white);
+  overflow-x: hidden;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+ul {
+  list-style: none;
+}
+
+.container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+/* Base button styles */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.75rem 1.5rem;
+  border-radius: 9999px;
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.2s;
+  border: none;
+  gap: 0.5rem;
+}
+
+.btn-orange {
+  background-color: var(--color-orange);
+  color: var(--color-white);
+}
+.btn-orange:hover {
+  background-color: #ea580c;
+}
+
+.btn-teal {
+  background-color: var(--color-teal);
+  color: var(--color-white);
+}
+.btn-teal:hover {
+  background-color: #214b5e;
+}
+
+/* Typography */
+h1, h2, h3, h4 {
+  font-weight: 700;
+  color: var(--color-primary);
+}
+
+.section {
+  padding: 5rem 0;
+}
