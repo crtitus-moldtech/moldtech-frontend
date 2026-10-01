@@ -1,108 +1,19 @@
-import { useState } from 'react';
+import { useEffect, useRef } from 'react';
+import { useForm, ValidationError } from '@formspree/react';
 import ScrollReveal from '../components/ScrollReveal/ScrollReveal';
 import { Mail, MapPin, Phone, UserRound } from 'lucide-react';
 import ctaBackground from '../assets/machine-5.jpg';
 import './ContactUs.css';
 
 const ContactUs = () => {
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [formStatus, setFormStatus] = useState('idle');
-  const [fieldErrors, setFieldErrors] = useState({});
+  const [state, handleSubmit] = useForm('xgavbpdv');
+  const formRef = useRef(null);
   const primaryPhone = '+91-9449464469';
   const primaryEmail = 'moldtech97@yahoo.com';
 
-  const handleFieldChange = (event) => {
-    const { name } = event.target;
-    if (fieldErrors[name]) {
-      setFieldErrors((currentErrors) => ({ ...currentErrors, [name]: '' }));
-    }
-    if (formStatus === 'error') setFormStatus('idle');
-  };
-
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-    if (isSubmitting) return;
-
-    const form = event.currentTarget;
-    const formData = new FormData(form);
-    const values = Object.fromEntries(formData.entries());
-    const errors = {};
-
-    if (!String(values.fullName || '').trim()) errors.fullName = 'Enter your full name.';
-    if (!String(values.email || '').trim()) {
-      errors.email = 'Enter your email address.';
-    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(String(values.email).trim())) {
-      errors.email = 'Enter a valid email address.';
-    }
-    if (!String(values.subject || '').trim()) errors.subject = 'Select a subject.';
-    if (!String(values.message || '').trim()) errors.message = 'Enter a message.';
-
-    setFieldErrors(errors);
-    if (Object.keys(errors).length > 0) {
-      setFormStatus('idle');
-      return;
-    }
-
-    // Netlify handles the honeypot submission while real users receive the same success response.
-    if (String(values['bot-field'] || '').trim()) {
-      form.reset();
-      setFormStatus('success');
-      return;
-    }
-
-    const requestUrl = new URL('/', window.location.href).toString();
-    const isLocalDevelopment = ['localhost', '127.0.0.1', '::1'].includes(window.location.hostname);
-    if (isLocalDevelopment) {
-      console.warn('Netlify Forms cannot receive submissions from the local Vite development server. Test this form on the deployed Netlify URL.', {
-        requestUrl,
-      });
-      setFormStatus('error');
-      return;
-    }
-
-    setIsSubmitting(true);
-    setFormStatus('idle');
-
-    const responseDetails = {
-      requestUrl,
-      status: null,
-      statusText: '',
-      responseText: '',
-    };
-
-    try {
-      const encodedData = new URLSearchParams();
-      for (const [key, value] of formData.entries()) {
-        encodedData.append(key, String(value));
-      }
-
-      const response = await fetch(requestUrl, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-        body: encodedData.toString(),
-      });
-
-      responseDetails.status = response.status;
-      responseDetails.statusText = response.statusText;
-      responseDetails.responseText = await response.text();
-
-      if (!response.ok) {
-        throw new Error(`Netlify form submission failed with HTTP ${response.status} ${response.statusText}`);
-      }
-
-      form.reset();
-      setFieldErrors({});
-      setFormStatus('success');
-    } catch (error) {
-      console.error('Contact form submission failed. Form values were omitted from this diagnostic.', {
-        ...responseDetails,
-        error,
-      });
-      setFormStatus('error');
-    } finally {
-      setIsSubmitting(false);
-    }
-  };
+  useEffect(() => {
+    if (state.succeeded) formRef.current?.reset();
+  }, [state.succeeded]);
 
   return (
     <>
@@ -152,37 +63,28 @@ const ContactUs = () => {
 
           <ScrollReveal className="contact-form-card" duration={800} delay={100}>
             <h2>Send us a Message</h2>
-            {formStatus === 'success' && (
+            {state.succeeded && (
               <p className="contact-form-status contact-form-status-success" role="status">
                 <strong>Message sent successfully!</strong> Thank you for contacting us. Our team will get back to you shortly.
               </p>
             )}
-            {formStatus === 'error' && (
+            {state.errors && (
               <p className="contact-form-status contact-form-status-error" role="alert">
                 Unable to send your message right now. Please try again.
               </p>
             )}
             <form
-              name="contact"
-              method="POST"
-              data-netlify="true"
-              data-netlify-honeypot="bot-field"
+              ref={formRef}
               onSubmit={handleSubmit}
-              onChange={handleFieldChange}
-              noValidate
             >
-              <input type="hidden" name="form-name" value="contact" />
-              <p className="contact-honeypot" aria-hidden="true">
-                <label>Don't fill this out if you're human: <input name="bot-field" tabIndex="-1" autoComplete="off" /></label>
-              </p>
               <div className="contact-form-fields">
-                <label htmlFor="full-name">Full Name *<input id="full-name" name="fullName" type="text" placeholder="Your full name" autoComplete="name" required aria-invalid={Boolean(fieldErrors.fullName)} aria-describedby={fieldErrors.fullName ? 'full-name-error' : undefined} />{fieldErrors.fullName && <span className="contact-field-error" id="full-name-error">{fieldErrors.fullName}</span>}</label>
-                <label htmlFor="email">Email Address *<input id="email" name="email" type="email" placeholder="your.email@example.com" autoComplete="email" required aria-invalid={Boolean(fieldErrors.email)} aria-describedby={fieldErrors.email ? 'email-error' : undefined} />{fieldErrors.email && <span className="contact-field-error" id="email-error">{fieldErrors.email}</span>}</label>
+                <label htmlFor="full-name">Full Name *<input id="full-name" name="fullName" type="text" placeholder="Your full name" autoComplete="name" required /><ValidationError className="contact-field-error" prefix="Full Name" field="fullName" errors={state.errors} /></label>
+                <label htmlFor="email">Email Address *<input id="email" name="email" type="email" placeholder="your.email@example.com" autoComplete="email" required /><ValidationError className="contact-field-error" prefix="Email" field="email" errors={state.errors} /></label>
                 <label htmlFor="phone">Phone Number<input id="phone" name="phone" type="tel" placeholder="+91-9999999999" autoComplete="tel" /></label>
                 <label htmlFor="company">Company Name<input id="company" name="company" type="text" placeholder="Your company name" autoComplete="organization" /></label>
               </div>
               <label htmlFor="subject">Subject *
-                <select id="subject" name="subject" defaultValue="" required aria-invalid={Boolean(fieldErrors.subject)} aria-describedby={fieldErrors.subject ? 'subject-error' : undefined}>
+                <select id="subject" name="subject" defaultValue="" required>
                   <option value="">Select a subject</option>
                   <option>General Enquiry</option>
                   <option>Request a Quote</option>
@@ -195,10 +97,10 @@ const ContactUs = () => {
                   <option>Research &amp; Development</option>
                   <option>Other</option>
                 </select>
-                {fieldErrors.subject && <span className="contact-field-error" id="subject-error">{fieldErrors.subject}</span>}
+                <ValidationError className="contact-field-error" prefix="Subject" field="subject" errors={state.errors} />
               </label>
-              <label htmlFor="message">Message *<textarea id="message" name="message" placeholder="Please describe your project requirements, specifications, or any questions you have..." required aria-invalid={Boolean(fieldErrors.message)} aria-describedby={fieldErrors.message ? 'message-error' : undefined}></textarea>{fieldErrors.message && <span className="contact-field-error" id="message-error">{fieldErrors.message}</span>}</label>
-              <button type="submit" disabled={isSubmitting}>{isSubmitting ? 'Sending...' : 'Send Message'}</button>
+              <label htmlFor="message">Message *<textarea id="message" name="message" placeholder="Please describe your project requirements, specifications, or any questions you have..." required></textarea><ValidationError className="contact-field-error" prefix="Message" field="message" errors={state.errors} /></label>
+              <button type="submit" disabled={state.submitting}>{state.submitting ? 'Sending...' : 'Send Message'}</button>
             </form>
           </ScrollReveal>
         </div>
