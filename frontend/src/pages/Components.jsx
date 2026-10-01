@@ -219,6 +219,11 @@ const eSeriesComponents = Object.entries(eSeriesImages)
 
 galleryComponents.push(...eSeriesComponents);
 
+const galleryRows = Array.from(
+  { length: Math.ceil(galleryComponents.length / 5) },
+  (_, rowIndex) => galleryComponents.slice(rowIndex * 5, rowIndex * 5 + 5),
+);
+
 function Components() {
   const [selectedComponent, setSelectedComponent] = useState(null);
 
@@ -324,30 +329,36 @@ function Components() {
 
     <section className="component-gallery-section" aria-labelledby="component-gallery-heading">
       <div className="component-gallery-container">
-        <ScrollReveal className="component-gallery-content" duration={800}>
+        <div className="component-gallery-content">
+          <ScrollReveal className="component-gallery-heading-reveal" duration={800}>
           <header className="component-gallery-heading-group">
             <h2 id="component-gallery-heading">COMPONENT GALLERY</h2>
             <p>Explore our extensive range of precision-manufactured components</p>
           </header>
+          </ScrollReveal>
 
           <div className="component-gallery-grid">
-            {galleryComponents.map((component) => (
-              <article className="component-gallery-card" key={component.id}>
-                <img src={component.image} alt={`Component ${component.id}`} />
-                <div className="component-gallery-overlay" aria-hidden="true" />
-                <span className="component-gallery-name" aria-hidden="true">Component {component.id}</span>
-                <button
-                  className="component-gallery-zoom"
-                  type="button"
-                  aria-label={`Zoom Component ${component.id}`}
-                  onClick={() => setSelectedComponent(component)}
-                >
-                  <ZoomIn size={24} aria-hidden="true" />
-                </button>
-              </article>
+            {galleryRows.map((row, rowIndex) => (
+              <ScrollReveal className="component-gallery-row" duration={650} delay={rowIndex * 25} stagger={40} key={row[0].id}>
+                {row.map((component) => (
+                  <article className="component-gallery-card" key={component.id}>
+                    <img src={component.image} alt={`Component ${component.id}`} loading="lazy" decoding="async" />
+                    <div className="component-gallery-overlay" aria-hidden="true" />
+                    <span className="component-gallery-name" aria-hidden="true">Component {component.id}</span>
+                    <button
+                      className="component-gallery-zoom"
+                      type="button"
+                      aria-label={`Zoom Component ${component.id}`}
+                      onClick={() => setSelectedComponent(component)}
+                    >
+                      <ZoomIn size={24} aria-hidden="true" />
+                    </button>
+                  </article>
+                ))}
+              </ScrollReveal>
             ))}
           </div>
-        </ScrollReveal>
+        </div>
       </div>
       {selectedComponent && (
         <div
