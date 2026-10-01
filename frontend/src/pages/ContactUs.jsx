@@ -73,6 +73,28 @@ const ContactUs = () => {
         </div>
       </section>
 
+      <section className="visit-facility-section" aria-labelledby="visit-facility-heading">
+        <div className="container">
+          <ScrollReveal className="visit-facility-content" duration={800}>
+            <header className="visit-facility-heading-group">
+              <h2 id="visit-facility-heading">Visit Our Facility</h2>
+              <p>Located in the heart of Bangalore's industrial area</p>
+            </header>
+            <div className="facility-map-frame">
+              <iframe
+                title="Google Maps location of our facility"
+                src="https://www.google.com/maps?q=12.9874067,77.5200081&z=15&output=embed"
+                width="100%"
+                height="100%"
+                loading="lazy"
+                allowFullScreen
+                referrerPolicy="no-referrer-when-downgrade"
+              />
+            </div>
+          </ScrollReveal>
+        </div>
+      </section>
+
       <section
         className="contact-cta-section"
         aria-labelledby="contact-cta-heading"
