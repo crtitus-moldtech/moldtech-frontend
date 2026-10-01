@@ -50,8 +50,25 @@ const ContactUs = () => {
       return;
     }
 
+    const requestUrl = new URL('/', window.location.href).toString();
+    const isLocalDevelopment = ['localhost', '127.0.0.1', '::1'].includes(window.location.hostname);
+    if (isLocalDevelopment) {
+      console.warn('Netlify Forms cannot receive submissions from the local Vite development server. Test this form on the deployed Netlify URL.', {
+        requestUrl,
+      });
+      setFormStatus('error');
+      return;
+    }
+
     setIsSubmitting(true);
     setFormStatus('idle');
+
+    const responseDetails = {
+      requestUrl,
+      status: null,
+      statusText: '',
+      responseText: '',
+    };
 
     try {
       const encodedData = new URLSearchParams();
@@ -59,18 +76,28 @@ const ContactUs = () => {
         encodedData.append(key, String(value));
       }
 
-      const response = await fetch('/', {
+      const response = await fetch(requestUrl, {
         method: 'POST',
         headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
         body: encodedData.toString(),
       });
 
-      if (!response.ok) throw new Error('Netlify form submission failed');
+      responseDetails.status = response.status;
+      responseDetails.statusText = response.statusText;
+      responseDetails.responseText = await response.text();
+
+      if (!response.ok) {
+        throw new Error(`Netlify form submission failed with HTTP ${response.status} ${response.statusText}`);
+      }
 
       form.reset();
       setFieldErrors({});
       setFormStatus('success');
-    } catch {
+    } catch (error) {
+      console.error('Contact form submission failed. Form values were omitted from this diagnostic.', {
+        ...responseDetails,
+        error,
+      });
       setFormStatus('error');
     } finally {
       setIsSubmitting(false);
