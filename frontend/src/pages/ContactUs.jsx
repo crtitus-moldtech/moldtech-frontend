@@ -1,12 +1,81 @@
+import { useState } from 'react';
 import ScrollReveal from '../components/ScrollReveal/ScrollReveal';
 import { Mail, MapPin, Phone, UserRound } from 'lucide-react';
 import ctaBackground from '../assets/machine-5.jpg';
 import './ContactUs.css';
 
 const ContactUs = () => {
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [formStatus, setFormStatus] = useState('idle');
+  const [fieldErrors, setFieldErrors] = useState({});
   const primaryPhone = '+91-9449464469';
   const primaryEmail = 'moldtech97@yahoo.com';
-  const handleSubmit = (event) => event.preventDefault();
+
+  const handleFieldChange = (event) => {
+    const { name } = event.target;
+    if (fieldErrors[name]) {
+      setFieldErrors((currentErrors) => ({ ...currentErrors, [name]: '' }));
+    }
+    if (formStatus === 'error') setFormStatus('idle');
+  };
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    if (isSubmitting) return;
+
+    const form = event.currentTarget;
+    const formData = new FormData(form);
+    const values = Object.fromEntries(formData.entries());
+    const errors = {};
+
+    if (!String(values.fullName || '').trim()) errors.fullName = 'Enter your full name.';
+    if (!String(values.email || '').trim()) {
+      errors.email = 'Enter your email address.';
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(String(values.email).trim())) {
+      errors.email = 'Enter a valid email address.';
+    }
+    if (!String(values.subject || '').trim()) errors.subject = 'Select a subject.';
+    if (!String(values.message || '').trim()) errors.message = 'Enter a message.';
+
+    setFieldErrors(errors);
+    if (Object.keys(errors).length > 0) {
+      setFormStatus('idle');
+      return;
+    }
+
+    // Netlify handles the honeypot submission while real users receive the same success response.
+    if (String(values['bot-field'] || '').trim()) {
+      form.reset();
+      setFormStatus('success');
+      return;
+    }
+
+    setIsSubmitting(true);
+    setFormStatus('idle');
+
+    try {
+      const encodedData = new URLSearchParams();
+      for (const [key, value] of formData.entries()) {
+        encodedData.append(key, String(value));
+      }
+
+      const response = await fetch('/', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: encodedData.toString(),
+      });
+
+      if (!response.ok) throw new Error('Netlify form submission failed');
+
+      form.reset();
+      setFieldErrors({});
+      setFormStatus('success');
+    } catch {
+      setFormStatus('error');
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
 
   return (
     <>
@@ -56,18 +125,53 @@ const ContactUs = () => {
 
           <ScrollReveal className="contact-form-card" duration={800} delay={100}>
             <h2>Send us a Message</h2>
-            <form onSubmit={handleSubmit}>
+            {formStatus === 'success' && (
+              <p className="contact-form-status contact-form-status-success" role="status">
+                <strong>Message sent successfully!</strong> Thank you for contacting us. Our team will get back to you shortly.
+              </p>
+            )}
+            {formStatus === 'error' && (
+              <p className="contact-form-status contact-form-status-error" role="alert">
+                Unable to send your message right now. Please try again.
+              </p>
+            )}
+            <form
+              name="contact"
+              method="POST"
+              data-netlify="true"
+              data-netlify-honeypot="bot-field"
+              onSubmit={handleSubmit}
+              onChange={handleFieldChange}
+              noValidate
+            >
+              <input type="hidden" name="form-name" value="contact" />
+              <p className="contact-honeypot" aria-hidden="true">
+                <label>Don't fill this out if you're human: <input name="bot-field" tabIndex="-1" autoComplete="off" /></label>
+              </p>
               <div className="contact-form-fields">
-                <label htmlFor="full-name">Full Name *<input id="full-name" name="fullName" type="text" placeholder="Your full name" required /></label>
-                <label htmlFor="email">Email Address *<input id="email" name="email" type="email" placeholder="your.email@example.com" required /></label>
-                <label htmlFor="phone">Phone Number<input id="phone" name="phone" type="tel" placeholder="+91-9999999999" /></label>
-                <label htmlFor="company">Company Name<input id="company" name="company" type="text" placeholder="Your company name" /></label>
+                <label htmlFor="full-name">Full Name *<input id="full-name" name="fullName" type="text" placeholder="Your full name" autoComplete="name" required aria-invalid={Boolean(fieldErrors.fullName)} aria-describedby={fieldErrors.fullName ? 'full-name-error' : undefined} />{fieldErrors.fullName && <span className="contact-field-error" id="full-name-error">{fieldErrors.fullName}</span>}</label>
+                <label htmlFor="email">Email Address *<input id="email" name="email" type="email" placeholder="your.email@example.com" autoComplete="email" required aria-invalid={Boolean(fieldErrors.email)} aria-describedby={fieldErrors.email ? 'email-error' : undefined} />{fieldErrors.email && <span className="contact-field-error" id="email-error">{fieldErrors.email}</span>}</label>
+                <label htmlFor="phone">Phone Number<input id="phone" name="phone" type="tel" placeholder="+91-9999999999" autoComplete="tel" /></label>
+                <label htmlFor="company">Company Name<input id="company" name="company" type="text" placeholder="Your company name" autoComplete="organization" /></label>
               </div>
               <label htmlFor="subject">Subject *
-                <select id="subject" name="subject" defaultValue="" required><option value="" disabled>Select a subject</option><option>Precision CNC Machining</option><option>Injection Molding</option><option>Tooling Solutions</option><option>Sheet Metal Fabrication</option><option>Sub Assembly Services</option><option>Design & Prototyping</option><option>General Enquiry</option></select>
+                <select id="subject" name="subject" defaultValue="" required aria-invalid={Boolean(fieldErrors.subject)} aria-describedby={fieldErrors.subject ? 'subject-error' : undefined}>
+                  <option value="">Select a subject</option>
+                  <option>General Enquiry</option>
+                  <option>Request a Quote</option>
+                  <option>Precision CNC Machining</option>
+                  <option>Injection Molding</option>
+                  <option>Advanced Tooling Solutions</option>
+                  <option>Sheet Metal Fabrication</option>
+                  <option>Sub Assembly Services</option>
+                  <option>Design &amp; Prototyping</option>
+                  <option>Research &amp; Development</option>
+                  <option>Other</option>
+                </select>
+                {fieldErrors.subject && <span className="contact-field-error" id="subject-error">{fieldErrors.subject}</span>}
               </label>
-              <label htmlFor="message">Message *<textarea id="message" name="message" placeholder="Please describe your project requirements, specifications, or any questions you have..." required></textarea></label>
-              <button type="submit">Send Message</button>
+              <label htmlFor="message">Message *<textarea id="message" name="message" placeholder="Please describe your project requirements, specifications, or any questions you have..." required aria-invalid={Boolean(fieldErrors.message)} aria-describedby={fieldErrors.message ? 'message-error' : undefined}></textarea>{fieldErrors.message && <span className="contact-field-error" id="message-error">{fieldErrors.message}</span>}</label>
+              <button type="submit" disabled={isSubmitting}>{isSubmitting ? 'Sending...' : 'Send Message'}</button>
             </form>
           </ScrollReveal>
         </div>
