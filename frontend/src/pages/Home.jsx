@@ -1,8 +1,42 @@
 import { ChevronRight, Printer, Cog, Calendar, FileText, Check, CheckCircle, Eye } from 'lucide-react';
 import heroImg from '../assets/hero.png';
 import servicesImg from '../assets/home-component.jpg';
+import component1 from '../assets/C-1.jpg';
+import component2 from '../assets/C-2.jpg';
+import component3 from '../assets/C-3.jpg';
+import component4 from '../assets/C-4.jpg';
+import component5 from '../assets/C-5.jpg';
+import component6 from '../assets/C-6.jpg';
+import component7 from '../assets/C-7.jpg';
+import component8 from '../assets/C-8.jpg';
+import component9 from '../assets/C-9.jpg';
+import component10 from '../assets/C-10.jpg';
+import component11 from '../assets/C-11.jpg';
+import component12 from '../assets/C-12.jpg';
+import component13 from '../assets/C-13.jpg';
+import component14 from '../assets/C-14.jpg';
+import component15 from '../assets/C-15.jpg';
+import component16 from '../assets/C-16.jpg';
+import component17 from '../assets/C-17.jpg';
+import component18 from '../assets/C-18.jpg';
+import component19 from '../assets/C-19.jpg';
+import component20 from '../assets/C-20.jpg';
+import component21 from '../assets/C-21.jpg';
+import component22 from '../assets/C-22.jpg';
+import component23 from '../assets/C-23.jpg';
+import component24 from '../assets/C-24.jpg';
 import ScrollReveal from '../components/ScrollReveal/ScrollReveal';
 import './Home.css';
+
+const components = [
+  component1, component2, component3, component4, component5, component6,
+  component7, component8, component9, component10, component11, component12,
+  component13, component14, component15, component16, component17, component18,
+  component19, component20, component21, component22, component23, component24,
+].map((image, index) => ({
+  image,
+  name: `Component ${String(index + 1).padStart(3, '0')}`,
+}));
 
 const Home = () => {
   return (
@@ -147,6 +181,31 @@ const Home = () => {
             </div>
           </ScrollReveal>
         </div>
+      </section>
+
+      {/* Quality Components Section */}
+      <section className="quality-components-section" aria-labelledby="quality-components-heading">
+        <ScrollReveal className="quality-components-content" duration={800}>
+          <header className="quality-components-header">
+            <h2 id="quality-components-heading"><span>Our Quality</span> <span>Components</span></h2>
+            <div className="quality-components-underline" aria-hidden="true" />
+            <p>Precision-engineered plastic components crafted with excellence and attention to detail</p>
+          </header>
+
+          <div className="quality-components-grid">
+            {components.map((component) => (
+              <article className="quality-component-card" key={component.name}>
+                <img src={component.image} alt={component.name} />
+                <div className="quality-component-name">{component.name}</div>
+              </article>
+            ))}
+          </div>
+
+          <a className="quality-components-button" href="/components" aria-label="View All Components">
+            <Eye size={18} aria-hidden="true" />
+            <span>View All Components</span>
+          </a>
+        </ScrollReveal>
       </section>
 
       {/* Certifications Section */}

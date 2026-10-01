@@ -2,6 +2,26 @@ import ScrollReveal from '../components/ScrollReveal/ScrollReveal';
 import { CarFront, CircleCheck, Eye, FilePlus2, FileText, Lightbulb, Menu, Star, Users } from 'lucide-react';
 import founderOne from '../assets/found-1.jpg';
 import founderTwo from '../assets/found-2.jpg';
+import sample52 from '../assets/S-52.jpg';
+import sample53 from '../assets/S-53.jpg';
+import sample54 from '../assets/S-54.jpg';
+import sample55 from '../assets/S-55.jpg';
+import sample56 from '../assets/S-56.jpg';
+import sample57 from '../assets/S-57.jpg';
+import sample58 from '../assets/S-58.jpg';
+import sample59 from '../assets/S-59.jpg';
+import sample60 from '../assets/S-60.jpg';
+import sample61 from '../assets/S-61.jpg';
+import sample62 from '../assets/S-62.jpg';
+import sample63 from '../assets/S-63.jpg';
+import sample64 from '../assets/S-64.jpg';
+import sample65 from '../assets/S-65.jpg';
+import sample66 from '../assets/S-66.jpg';
+import sample67 from '../assets/S-67.jpg';
+import sample68 from '../assets/S-68.jpg';
+import sample69 from '../assets/S-69.jpg';
+import sample70 from '../assets/S-70.jpg';
+import sample71 from '../assets/S-71.jpg';
 import './AboutUs.css';
 
 const coreValues = [
@@ -41,6 +61,29 @@ const industries = [
   { title: 'Medical', description: 'Medical grade plastic components and devices', icon: FilePlus2 },
   { title: 'Home Appliances', description: 'Components for home appliance manufacturers', icon: FileText },
   { title: 'Electronics', description: 'Electronic component housings and parts', icon: Menu },
+];
+
+const manufacturingSamples = [
+  { id: 52, image: sample52 },
+  { id: 53, image: sample53 },
+  { id: 54, image: sample54 },
+  { id: 55, image: sample55 },
+  { id: 56, image: sample56 },
+  { id: 57, image: sample57 },
+  { id: 58, image: sample58 },
+  { id: 59, image: sample59 },
+  { id: 60, image: sample60 },
+  { id: 61, image: sample61 },
+  { id: 62, image: sample62 },
+  { id: 63, image: sample63 },
+  { id: 64, image: sample64 },
+  { id: 65, image: sample65 },
+  { id: 66, image: sample66 },
+  { id: 67, image: sample67 },
+  { id: 68, image: sample68 },
+  { id: 69, image: sample69 },
+  { id: 70, image: sample70 },
+  { id: 71, image: sample71 }
 ];
 
 const AboutUs = () => {
@@ -180,6 +223,33 @@ const AboutUs = () => {
                   <div className="industry-serve-icon" aria-hidden="true"><Icon size={38} /></div>
                   <h3>{title}</h3>
                   <p>{description}</p>
+                </article>
+              ))}
+            </div>
+          </ScrollReveal>
+        </div>
+      </section>
+
+      <section className="precision-manufacturing-section" aria-labelledby="precision-manufacturing-heading">
+        <div className="container">
+          <ScrollReveal className="precision-manufacturing-reveal" duration={800}>
+            <header className="precision-manufacturing-heading">
+              <h2 id="precision-manufacturing-heading">Precision Manufacturing</h2>
+              <div className="precision-manufacturing-underline" aria-hidden="true" />
+              <p>Showcasing our expertise in creating high-quality plastic components with exceptional precision and finish</p>
+            </header>
+
+            <div className="precision-manufacturing-grid">
+              {manufacturingSamples.map(({ id, image }) => (
+                <article className="precision-sample-card" key={id}>
+                  <img src={image} alt={`Sample #${id} - Precision Engineered`} />
+                  <div className="precision-sample-overlay" aria-hidden="true">
+                    <div className="precision-sample-copy">
+                      <h3>Sample #{id}</h3>
+                      <p>Precision Engineered</p>
+                    </div>
+                  </div>
+                  <span className="precision-sample-featured" aria-hidden="true">★</span>
                 </article>
               ))}
             </div>
