@@ -1,0 +1,74 @@
+.scroll-reveal {
+  --scroll-reveal-distance: 35px;
+  opacity: 0;
+  transform: translateY(var(--scroll-reveal-distance));
+  transition:
+    opacity var(--scroll-reveal-duration) ease-out var(--scroll-reveal-delay),
+    transform var(--scroll-reveal-duration) ease-out var(--scroll-reveal-delay);
+}
+
+.scroll-reveal--down {
+  transform: translateY(calc(var(--scroll-reveal-distance) * -1));
+}
+
+.scroll-reveal--left {
+  transform: translateX(calc(var(--scroll-reveal-distance) * -1));
+}
+
+.scroll-reveal--right {
+  transform: translateX(var(--scroll-reveal-distance));
+}
+
+.scroll-reveal--visible {
+  opacity: 1;
+  transform: translate(0, 0);
+}
+
+.scroll-reveal--stagger {
+  opacity: 1;
+  transform: none;
+  transition: none;
+}
+
+.scroll-reveal--stagger > * {
+  opacity: 0;
+  transform: translateY(var(--scroll-reveal-distance));
+  transition:
+    opacity var(--scroll-reveal-duration) ease-out var(--scroll-reveal-item-delay, var(--scroll-reveal-delay)),
+    transform var(--scroll-reveal-duration) ease-out var(--scroll-reveal-item-delay, var(--scroll-reveal-delay));
+}
+
+.scroll-reveal--stagger.scroll-reveal--down > * {
+  transform: translateY(calc(var(--scroll-reveal-distance) * -1));
+}
+
+.scroll-reveal--stagger.scroll-reveal--left > * {
+  transform: translateX(calc(var(--scroll-reveal-distance) * -1));
+}
+
+.scroll-reveal--stagger.scroll-reveal--right > * {
+  transform: translateX(var(--scroll-reveal-distance));
+}
+
+.scroll-reveal--stagger.scroll-reveal--visible > * {
+  opacity: 1;
+  transform: translate(0, 0);
+}
+
+@media (max-width: 767px) {
+  .scroll-reveal {
+    --scroll-reveal-distance: 24px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .scroll-reveal,
+  .scroll-reveal--down,
+  .scroll-reveal--left,
+  .scroll-reveal--right,
+  .scroll-reveal--stagger > * {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}

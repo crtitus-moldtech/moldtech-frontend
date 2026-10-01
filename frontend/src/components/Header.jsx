@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { ChevronRight, Menu, X } from 'lucide-react';
 import moldtechLogo from '../assets/moldtech-logo.png';
 import './Header.css';
@@ -21,12 +21,12 @@ const Header = () => {
         {/* Desktop Navigation */}
         <nav className="desktop-nav">
           <ul className="nav-links">
-            <li><a href="#" className="nav-link active">Home</a></li>
-            <li><a href="#" className="nav-link">About Us</a></li>
-            <li><a href="#" className="nav-link">Machines</a></li>
+            <li><a href="/" className="nav-link active">Home</a></li>
+            <li><a href="/about-us" className="nav-link">About Us</a></li>
+            <li><a href="/machines" className="nav-link">Machines</a></li>
             <li><a href="#" className="nav-link">Components</a></li>
           </ul>
-          <a href="#" className="btn btn-orange contact-btn">
+          <a href="/contact-us" className="btn btn-orange contact-btn">
             Contact <ChevronRight size={18} />
           </a>
         </nav>
@@ -44,12 +44,12 @@ const Header = () => {
       {isMobileMenuOpen && (
         <div className="mobile-nav">
           <ul className="mobile-nav-links">
-            <li><a href="#" className="mobile-nav-link active">Home</a></li>
-            <li><a href="#" className="mobile-nav-link">About Us</a></li>
-            <li><a href="#" className="mobile-nav-link">Machines</a></li>
+            <li><a href="/" className="mobile-nav-link active">Home</a></li>
+            <li><a href="/about-us" className="mobile-nav-link">About Us</a></li>
+            <li><a href="/machines" className="mobile-nav-link">Machines</a></li>
             <li><a href="#" className="mobile-nav-link">Components</a></li>
             <li>
-              <a href="#" className="btn btn-orange mobile-contact-btn">
+              <a href="/contact-us" className="btn btn-orange mobile-contact-btn">
                 Contact <ChevronRight size={18} />
               </a>
             </li>

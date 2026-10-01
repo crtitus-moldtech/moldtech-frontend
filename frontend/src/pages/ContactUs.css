@@ -1,0 +1,74 @@
+.contact-us-hero {
+  display: flex;
+  min-height: 320px;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 4.55rem 1.5rem 2.5rem;
+  background: linear-gradient(105deg, #3f6f7c 0%, #8a7565 50%, #f86b13 100%);
+  overflow: hidden;
+}
+
+.contact-us-hero-content {
+  width: min(100%, 750px);
+  text-align: center;
+}
+
+.contact-us-hero h1 {
+  margin: 0;
+  color: var(--color-white);
+  font-size: clamp(2.25rem, 4vw, 3.5rem);
+  font-weight: 800;
+  line-height: 1.15;
+}
+
+.contact-us-hero p {
+  max-width: 750px;
+  margin: 1rem auto 0;
+  color: var(--color-white);
+  font-size: clamp(1.05rem, 1.8vw, 1.5rem);
+  font-weight: 500;
+  line-height: 1.25;
+}
+
+@media (max-width: 767px) {
+  .contact-us-hero {
+    min-height: 265px;
+    padding: 3.8rem 1.25rem 2rem;
+  }
+
+  .contact-us-hero p {
+    margin-top: 0.85rem;
+    line-height: 1.4;
+  }
+}
+
+/* Get In Touch Section */
+.contact-details-section { padding: 4rem 0 4.5rem; background: var(--color-white); }
+.contact-details-grid { display: grid; grid-template-columns: 1fr; gap: 3rem; max-width: 1150px; }
+.contact-info-column > h2 { margin: 0; color: #35758c; font-size: clamp(1.75rem, 2.5vw, 1.9rem); font-weight: 800; }
+.contact-intro { max-width: 540px; margin: 1.8rem 0 0; color: #173d63; font-size: 1rem; line-height: 1.6; }
+.primary-contact-card { margin-top: 2rem; padding: 1.8rem; border-radius: 13px; background: #f7f5f2; }
+.primary-contact-card h3, .contact-information-item h3, .business-details-card h3 { margin: 0; color: #35758c; font-size: 1.05rem; font-weight: 700; }
+.primary-contact-person { display: flex; align-items: center; gap: 0.75rem; margin-top: 1.3rem; color: #174467; }
+.primary-contact-icon { display: flex; width: 36px; height: 36px; align-items: center; justify-content: center; border-radius: 50%; background: #35758c; color: var(--color-white); }
+.primary-contact-person strong, .primary-contact-person small { display: block; font-size: 0.9rem; line-height: 1.35; }
+.primary-contact-person small { font-size: 0.8rem; }
+.contact-information-list { display: grid; gap: 1.35rem; margin-top: 1.8rem; }
+.contact-information-item { display: flex; gap: 1rem; color: #173d63; transition: transform 300ms ease-out; }
+.contact-information-item:hover { transform: translateX(4px); }
+.contact-information-icon { display: flex; width: 44px; height: 44px; flex: 0 0 auto; align-items: center; justify-content: center; border-radius: 8px; color: #35758c; background: #eef4f7; }
+.email-icon { background: #fff0d2; color: #b65a00; }.address-icon { background: #eff3f7; color: #4c6075; }
+.contact-information-item h3 { font-size: 0.95rem; }.contact-information-item p { margin: 0.35rem 0 0; font-size: 0.9rem; line-height: 1.65; }
+.business-details-card { margin-top: 1.8rem; padding: 1.35rem; border-radius: 12px; background: #f5f8fa; color: #173d63; }
+.business-details-card h3 { font-size: 0.95rem; }.business-details-card p { margin: 0.75rem 0 0; font-size: 0.9rem; }
+.contact-form-card { padding: 2rem; border-radius: 14px; background: #f8f5f0; }
+.contact-form-card h2 { margin: 0 0 1.6rem; color: #102b43; font-size: 1.5rem; font-weight: 800; }
+.contact-form-card form { display: grid; gap: 1.25rem; }.contact-form-fields { display: grid; grid-template-columns: 1fr; gap: 1.25rem; }
+.contact-form-card label { display: grid; gap: 0.5rem; color: #102b43; font-size: 0.82rem; font-weight: 500; }
+.contact-form-card input, .contact-form-card select, .contact-form-card textarea { width: 100%; border: 1px solid #c9d7e5; border-radius: 8px; background: var(--color-white); color: #173d63; font: inherit; font-size: 0.9rem; outline: none; }
+.contact-form-card input, .contact-form-card select { min-height: 47px; padding: 0 1rem; }.contact-form-card textarea { min-height: 160px; padding: 0.85rem 1rem; line-height: 1.6; resize: vertical; }
+.contact-form-card input::placeholder, .contact-form-card textarea::placeholder { color: #9aa9c0; }.contact-form-card input:focus, .contact-form-card select:focus, .contact-form-card textarea:focus { border-color: #35758c; box-shadow: 0 0 0 2px rgba(53, 117, 140, 0.16); }
+.contact-form-card button { min-height: 53px; border: 0; border-radius: 7px; background: #35758c; color: var(--color-white); cursor: pointer; font: inherit; font-size: 1rem; font-weight: 700; transition: background-color 300ms ease-out, box-shadow 300ms ease-out; }.contact-form-card button:hover { background: #285f73; box-shadow: 0 6px 14px rgba(15, 41, 66, 0.15); }
+@media (min-width: 768px) { .contact-form-fields { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (min-width: 1024px) { .contact-details-grid { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 3.25rem; }.contact-form-card { padding: 2rem; } }
+@media (max-width: 575px) { .contact-details-section { padding: 3.5rem 0; }.primary-contact-card, .contact-form-card { padding: 1.5rem; } }

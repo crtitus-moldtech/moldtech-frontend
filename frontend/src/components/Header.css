@@ -50,6 +50,7 @@
   display: none;
   align-items: center;
   gap: 2rem;
+  margin-left: auto;
 }
 
 @media (min-width: 768px) {
@@ -57,7 +58,7 @@
     display: flex;
   }
   .mobile-menu-btn {
-    display: none;
+    display: none !important;
   }
 }
 
@@ -98,6 +99,17 @@
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+@media (max-width: 767px) {
+  .desktop-nav {
+    display: none;
+  }
+
+  .mobile-menu-btn {
+    display: flex;
+    margin-left: auto;
+  }
 }
 
 .mobile-nav {

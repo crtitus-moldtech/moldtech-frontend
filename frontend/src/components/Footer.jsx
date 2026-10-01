@@ -1,13 +1,13 @@
-import React from 'react';
 import { MapPin, Phone, Mail } from 'lucide-react';
 import moldtechLogo from '../assets/moldtech-logo.png';
+import ScrollReveal from './ScrollReveal/ScrollReveal';
 import './Footer.css';
 
 const Footer = () => {
   return (
     <footer className="footer">
       <div className="container footer-container">
-        <div className="footer-grid">
+        <ScrollReveal className="footer-grid" stagger={120}>
           
           {/* Brand Column */}
           <div className="footer-col brand-col">
@@ -66,11 +66,11 @@ const Footer = () => {
               </div>
             </div>
           </div>
-        </div>
+        </ScrollReveal>
       </div>
 
       <div className="footer-bottom">
-        <div className="container footer-bottom-container">
+        <ScrollReveal className="container footer-bottom-container" stagger={100}>
           <div className="copyright">
             © 2026 MOLDTECH. All rights reserved. | ISO 9001:2015 Certified
           </div>
@@ -78,7 +78,7 @@ const Footer = () => {
             <span className="gst">GST: 29ABDPT7797F1ZV</span>
             <span className="pan">PAN: ABDPT7797F</span>
           </div>
-        </div>
+        </ScrollReveal>
       </div>
     </footer>
   );
