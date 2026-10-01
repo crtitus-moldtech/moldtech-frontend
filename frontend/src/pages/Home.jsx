@@ -1,5 +1,6 @@
 import { ChevronRight, Printer, Cog, Calendar, FileText, Check, CheckCircle, Eye } from 'lucide-react';
 import heroImg from '../assets/hero.png';
+import servicesImg from '../assets/home-component.jpg';
 import ScrollReveal from '../components/ScrollReveal/ScrollReveal';
 import './Home.css';
 
@@ -28,7 +29,7 @@ const Home = () => {
       <section className="services section">
         <div className="container services-container">
           <div className="services-image-col">
-            <img src={heroImg} alt="Precision manufacturing" className="services-image" />
+            <img src={servicesImg} alt="Precision gears and components" className="services-image" />
           </div>
           <ScrollReveal className="services-grid-col" stagger={120}>
             <div className="service-card">

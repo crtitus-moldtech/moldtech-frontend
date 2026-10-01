@@ -1,8 +1,11 @@
 import ScrollReveal from '../components/ScrollReveal/ScrollReveal';
 import { Mail, MapPin, Phone, UserRound } from 'lucide-react';
+import ctaBackground from '../assets/machine-5.jpg';
 import './ContactUs.css';
 
 const ContactUs = () => {
+  const primaryPhone = '+91-9449464469';
+  const primaryEmail = 'moldtech97@yahoo.com';
   const handleSubmit = (event) => event.preventDefault();
 
   return (
@@ -31,11 +34,11 @@ const ContactUs = () => {
             <div className="contact-information-list">
               <div className="contact-information-item">
                 <span className="contact-information-icon phone-icon" aria-hidden="true"><Phone size={20} /></span>
-                <div><h3>Phone Numbers</h3><p>+91-9449464469<br />+91-9886889688</p></div>
+                <div><h3>Phone Numbers</h3><p>{primaryPhone}<br />+91-9886889688</p></div>
               </div>
               <div className="contact-information-item">
                 <span className="contact-information-icon email-icon" aria-hidden="true"><Mail size={20} /></span>
-                <div><h3>Email Addresses</h3><p>moldtech97@yahoo.com<br />crtius@moldtech.in</p></div>
+                <div><h3>Email Addresses</h3><p>{primaryEmail}<br />crtius@moldtech.in</p></div>
               </div>
               <div className="contact-information-item">
                 <span className="contact-information-icon address-icon" aria-hidden="true"><MapPin size={20} /></span>
@@ -68,6 +71,28 @@ const ContactUs = () => {
             </form>
           </ScrollReveal>
         </div>
+      </section>
+
+      <section
+        className="contact-cta-section"
+        aria-labelledby="contact-cta-heading"
+        style={{ backgroundImage: `url(${ctaBackground})` }}
+      >
+        <div className="contact-cta-overlay" aria-hidden="true" />
+        <ScrollReveal className="contact-cta-content" duration={800}>
+          <h2 id="contact-cta-heading">Ready to Start Your Project?</h2>
+          <p>Contact us today to discuss your precision injection molding requirements. Our experienced team is ready to provide you with cost-effective solutions.</p>
+          <div className="contact-cta-actions">
+            <a className="contact-cta-button contact-cta-call" href={`tel:${primaryPhone}`} aria-label="Call Now">
+              <Phone size={18} aria-hidden="true" />
+              <span>Call Now</span>
+            </a>
+            <a className="contact-cta-button contact-cta-email" href={`mailto:${primaryEmail}`} aria-label="Email Us">
+              <Mail size={18} aria-hidden="true" />
+              <span>Email Us</span>
+            </a>
+          </div>
+        </ScrollReveal>
       </section>
     </>
   );

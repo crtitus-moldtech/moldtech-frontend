@@ -72,3 +72,37 @@
 @media (min-width: 768px) { .contact-form-fields { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 @media (min-width: 1024px) { .contact-details-grid { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 3.25rem; }.contact-form-card { padding: 2rem; } }
 @media (max-width: 575px) { .contact-details-section { padding: 3.5rem 0; }.primary-contact-card, .contact-form-card { padding: 1.5rem; } }
+
+/* Closing project CTA */
+.contact-cta-section {
+  position: relative;
+  display: flex;
+  min-height: 420px;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  padding: 4rem 1.5rem;
+  background-color: #171717;
+  background-position: center;
+  background-size: cover;
+}
+.contact-cta-overlay { position: absolute; inset: 0; background: rgba(0, 0, 0, 0.72); }
+.contact-cta-content { position: relative; z-index: 1; width: min(100%, 800px); color: #fff; text-align: center; }
+.contact-cta-content h2 { margin: 0; color: #fff; font-size: clamp(1.75rem, 3vw, 2.125rem); font-weight: 800; line-height: 1.2; }
+.contact-cta-content p { max-width: 750px; margin: 1.15rem auto 1.75rem; color: #fff; font-size: clamp(1rem, 1.5vw, 1.125rem); font-weight: 500; line-height: 1.5; }
+.contact-cta-actions { display: flex; align-items: center; justify-content: center; gap: 0.875rem; }
+.contact-cta-button { display: inline-flex; min-height: 53px; align-items: center; justify-content: center; gap: 0.5rem; border-radius: 8px; padding: 0 1.5rem; color: #fff; font-size: 1rem; font-weight: 700; text-decoration: none; transition: background-color 300ms ease-out, box-shadow 300ms ease-out, transform 300ms ease-out; }
+.contact-cta-call { min-width: 150px; background: #f56612; }
+.contact-cta-call:hover { transform: translateY(-2px); background: #df5508; box-shadow: 0 8px 18px rgba(0, 0, 0, 0.22); }
+.contact-cta-email { min-width: 140px; background: #c65c08; }
+.contact-cta-email:hover { transform: translateY(-2px); background: #a94b05; box-shadow: 0 8px 18px rgba(0, 0, 0, 0.22); }
+.contact-cta-button:focus-visible { outline: 3px solid #fff; outline-offset: 3px; }
+@media (max-width: 767px) {
+  .contact-cta-section { min-height: 410px; padding: 3.5rem 1.25rem; }
+  .contact-cta-content h2 { font-size: clamp(1.625rem, 7vw, 1.875rem); }
+  .contact-cta-content p { margin: 1rem auto 1.5rem; font-size: 1rem; }
+}
+@media (max-width: 420px) {
+  .contact-cta-actions { flex-direction: column; }
+  .contact-cta-button { width: min(100%, 240px); }
+}
