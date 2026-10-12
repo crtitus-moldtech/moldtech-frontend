@@ -1,5 +1,6 @@
 import { ChevronRight, Printer, Cog, Calendar, FileText, Check, CheckCircle, Eye } from 'lucide-react';
 import heroImg from '../assets/hero.png';
+import heroVideo from '../assets/home-hero-vid.mp4';
 import servicesImg from '../assets/home-component.jpg';
 import component1 from '../assets/C-1.jpg';
 import component2 from '../assets/C-2.jpg';
@@ -43,6 +44,19 @@ const Home = () => {
     <div className="home">
       {/* Hero Section */}
       <section className="hero" style={{ backgroundImage: `url(${heroImg})` }}>
+        <video
+          className="hero-video"
+          autoPlay
+          muted
+          loop
+          playsInline
+          preload="metadata"
+          poster={heroImg}
+          aria-hidden="true"
+          tabIndex={-1}
+        >
+          <source src={heroVideo} type="video/mp4" />
+        </video>
         <div className="hero-overlay"></div>
         <div className="container hero-container">
           <ScrollReveal className="hero-content">
@@ -52,9 +66,9 @@ const Home = () => {
               <span className="text-orange">Injection</span><br />
               Moulding
             </h1>
-            <button className="btn btn-teal hero-btn">
+            <a className="btn btn-teal hero-btn" href="/contact-us">
               Request a Quote <ChevronRight size={18} />
-            </button>
+            </a>
           </ScrollReveal>
         </div>
       </section>
